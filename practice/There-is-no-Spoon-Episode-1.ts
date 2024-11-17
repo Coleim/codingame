@@ -1,17 +1,36 @@
-/**
- * Don't let the machines win. You are humanity's last hope...
- **/
-
 const width: number = parseInt(readline()); // the number of cells on the X axis
 const height: number = parseInt(readline()); // the number of cells on the Y axis
+
+const grid: string[] = [];
+
 for (let i = 0; i < height; i++) {
-    const line: string = readline(); // width characters, each either 0 or .
-    console.error("line: " , line)
+    grid.push(readline());
 }
 
-// Write an action using console.log()
-// To debug: console.error('Debug messages...');
+for (let y = 0 ; y < height; ++y ) {
+    for(let x = 0; x <width; ++x) {
+        if( grid[y][x] === '0') {
+            let rightX = -1;
+            let rightY = -1;
+            let bottomX = -1;
+            let bottomY = -1;
 
-
-// Three coordinates: a node, its right neighbor, its bottom neighbor
-console.log('0 0 1 0 0 1');
+            // get next node in line
+            for( let nextX = x+1 ; nextX < width; ++nextX ) {
+                if (grid[y][nextX] === '0') {
+                    rightX = nextX;
+                    rightY = y;
+                    break;
+                }
+            }
+            for( let nextY = y+1 ; nextY < height; ++nextY ) {
+                if (grid[nextY][x] === '0') {
+                    bottomX = x;
+                    bottomY = nextY;
+                    break;
+                }
+            }
+            console.log( `${x} ${y} ${rightX} ${rightY} ${bottomX} ${bottomY}` )
+        }
+    }
+}
